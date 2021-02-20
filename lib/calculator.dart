@@ -6,4 +6,10 @@ class Calculator {
     if (b == 0) throw ArgumentError('You cannot divide by zero');
     return a / b;
   }
+
+  Future<double> powerOfTwo(double a) => Future.delayed(const Duration(seconds: 1), () => a * a);
+
+  Stream<double> pi() => Stream.fromIterable([3, 3.1, 3.14, 3.242, 3.2425]);
 }
+
+enum Operation { add, subtract, multiply, divide }

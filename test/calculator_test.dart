@@ -68,4 +68,16 @@ main() {
       expect(() => calculator.divide(10, 0), throwsArgumentError);
     });
   });
+
+  group('powerOfTwo', () {
+    test('return 81 whe the input is 9', () async {
+      expect(await calculator.powerOfTwo(9), 81, reason: 'If you want 81, your input should be 9');
+    });
+  });
+
+  group('pi', () {
+    test('emits [3, 3.1, 3.14, 3.242, 3.2425] in that order', () {
+      expect(calculator.pi(), emitsInOrder([3, 3.1, 3.14, 3.242, 3.2425]));
+    });
+  });
 }
