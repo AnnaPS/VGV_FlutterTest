@@ -11,14 +11,18 @@ class TwoDigitOperation extends StatefulWidget {
 }
 
 class _TwoDigitOperationState extends State<TwoDigitOperation> {
-  TextEditingController tc1;
-  TextEditingController tc2;
+  TextEditingController tc1 = TextEditingController();
+  TextEditingController tc2 = TextEditingController();
+  ValueKey textFieldTopKey;
+  ValueKey textFieldBottomKey;
+  ValueKey buttonKey;
   double result = -1.0;
 
   @override
   void initState() {
-    tc1 = TextEditingController();
-    tc2 = TextEditingController();
+    textFieldTopKey = Key('textfield_top_${checkTypeOfOperation(widget.operation).toLowerCase()}');
+    textFieldBottomKey = Key('textfield_bottom_${checkTypeOfOperation(widget.operation).toLowerCase()}');
+    buttonKey = Key('button_${checkTypeOfOperation(widget.operation).toLowerCase()}');
     super.initState();
   }
 
@@ -42,10 +46,12 @@ class _TwoDigitOperationState extends State<TwoDigitOperation> {
               Text(
                 checkTypeOfOperation(widget.operation),
                 style: TextStyle(fontSize: 20),
+                textDirection: TextDirection.ltr,
               ),
               Text(
                 'Result',
                 style: TextStyle(fontSize: 20),
+                textDirection: TextDirection.ltr,
               ),
             ],
           ),
@@ -56,8 +62,8 @@ class _TwoDigitOperationState extends State<TwoDigitOperation> {
           children: [
             SizedBox(
               width: 100,
-              child: TextField(
-                key: Key('textfield_top_${checkTypeOfOperation(widget.operation).toLowerCase()}'),
+              child: TextFormField(
+                key: textFieldTopKey,
                 controller: tc1,
                 decoration: InputDecoration(
                   labelText: 'Num 1',
@@ -67,7 +73,7 @@ class _TwoDigitOperationState extends State<TwoDigitOperation> {
             SizedBox(
               width: 100,
               child: TextField(
-                key: Key('textfield_bottom_${checkTypeOfOperation(widget.operation).toLowerCase()}'),
+                key: textFieldBottomKey,
                 controller: tc2,
                 decoration: InputDecoration(
                   labelText: 'Num 2',
@@ -76,6 +82,7 @@ class _TwoDigitOperationState extends State<TwoDigitOperation> {
             ),
             Text(
               result == -1 ? '???' : result.toString(),
+              textDirection: TextDirection.ltr,
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.green,
@@ -88,7 +95,7 @@ class _TwoDigitOperationState extends State<TwoDigitOperation> {
         SizedBox(
           height: 40,
           child: FloatingActionButton(
-            key: Key('button_${checkTypeOfOperation(widget.operation).toLowerCase()}'),
+            key: buttonKey,
             onPressed: () {
               final num1 = tc1.text != '' ? double.parse(tc1.text) : 0.0;
               final num2 = tc2.text != '' ? double.parse(tc2.text) : 0.0;

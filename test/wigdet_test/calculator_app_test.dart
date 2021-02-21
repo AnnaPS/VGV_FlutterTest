@@ -30,8 +30,18 @@ void main() {
   group('minus', () {
     testWidgets('shows result when given two numbers', (tester) async {
       await tester.pumpWidget(CalculatorApp());
-      await tester.enterText(find.byKey(Key('textfield_top_minus')), '6');
-      await tester.enterText(find.byKey(Key('textfield_bottom_minus')), '3');
+      final textFieldTopMinus = find.byKey(Key('textfield_top_minus'));
+      final textFieldBottomMinus = find.byKey(Key('textfield_bottom_minus'));
+
+      await tester.ensureVisible(textFieldTopMinus);
+      await tester.ensureVisible(textFieldBottomMinus);
+
+      await tester.tap(textFieldTopMinus);
+      await tester.enterText(textFieldTopMinus, '6');
+
+      await tester.tap(textFieldBottomMinus);
+      await tester.enterText(textFieldBottomMinus, '3');
+
       await tester.tap(find.byKey(Key('button_minus')));
       await tester.pumpAndSettle();
       expect(find.text('3.0'), findsOneWidget);
