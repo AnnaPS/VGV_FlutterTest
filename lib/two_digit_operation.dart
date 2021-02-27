@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/calculator.dart';
+import 'package:flutter_app/calculator_utils.dart';
 
 class TwoDigitOperation extends StatefulWidget {
   const TwoDigitOperation({this.calculator, this.operation});
@@ -20,9 +21,9 @@ class _TwoDigitOperationState extends State<TwoDigitOperation> {
 
   @override
   void initState() {
-    textFieldTopKey = Key('textfield_top_${checkTypeOfOperation(widget.operation).toLowerCase()}');
-    textFieldBottomKey = Key('textfield_bottom_${checkTypeOfOperation(widget.operation).toLowerCase()}');
-    buttonKey = Key('button_${checkTypeOfOperation(widget.operation).toLowerCase()}');
+    textFieldTopKey = Key('textfield_top_${CalculatorUtils.checkTypeOfOperation(widget.operation).toLowerCase()}');
+    textFieldBottomKey = Key('textfield_bottom_${CalculatorUtils.checkTypeOfOperation(widget.operation).toLowerCase()}');
+    buttonKey = Key('button_${CalculatorUtils.checkTypeOfOperation(widget.operation).toLowerCase()}');
     super.initState();
   }
 
@@ -44,7 +45,7 @@ class _TwoDigitOperationState extends State<TwoDigitOperation> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                checkTypeOfOperation(widget.operation),
+                CalculatorUtils.checkTypeOfOperation(widget.operation),
                 style: TextStyle(fontSize: 20),
                 textDirection: TextDirection.ltr,
               ),
@@ -64,6 +65,7 @@ class _TwoDigitOperationState extends State<TwoDigitOperation> {
               width: 100,
               child: TextFormField(
                 key: textFieldTopKey,
+                keyboardType: TextInputType.number,
                 controller: tc1,
                 decoration: InputDecoration(
                   labelText: 'Num 1',
@@ -74,6 +76,7 @@ class _TwoDigitOperationState extends State<TwoDigitOperation> {
               width: 100,
               child: TextField(
                 key: textFieldBottomKey,
+                keyboardType: TextInputType.number,
                 controller: tc2,
                 decoration: InputDecoration(
                   labelText: 'Num 2',
@@ -99,58 +102,14 @@ class _TwoDigitOperationState extends State<TwoDigitOperation> {
             onPressed: () {
               final num1 = tc1.text != '' ? double.parse(tc1.text) : 0.0;
               final num2 = tc2.text != '' ? double.parse(tc2.text) : 0.0;
-              _makeOperation(num1, num2, widget.operation);
+              setState(() {
+                result = CalculatorUtils.makeOperation(num1, num2, widget.operation, widget.calculator);
+              });
             },
             child: Icon(Icons.check),
           ),
         )
       ],
     );
-  }
-
-  String checkTypeOfOperation(operation) {
-    switch (operation) {
-      case Operation.add:
-        return 'Plus';
-      case Operation.subtract:
-        return 'Minus';
-      case Operation.multiply:
-        return 'Multiplied by';
-      case Operation.divide:
-        return 'Divided by';
-      default:
-        return '';
-    }
-  }
-
-  _makeOperation(double num1, double num2, Operation operation) {
-    switch (operation) {
-      case Operation.add:
-        setState(() {
-          result = num1 + num2;
-        });
-        break;
-      case Operation.subtract:
-        setState(() {
-          result = num1 - num2;
-        });
-        break;
-      case Operation.multiply:
-        setState(() {
-          result = num1 * num2;
-        });
-        break;
-      case Operation.divide:
-        setState(() {
-          if (num1 == 0 || num2 == 0) {
-            result = 0.0;
-          } else {
-            result = num1 / num2;
-          }
-        });
-        break;
-      default:
-        return 0;
-    }
   }
 }

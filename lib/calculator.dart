@@ -12,4 +12,4 @@ class Calculator {
   Stream<double> pi() => Stream.fromIterable([3, 3.1, 3.14, 3.242, 3.2425]);
 }
 
-enum Operation { add, subtract, multiply, divide }
+enum Operation { add, subtract, multiply, divide, powerOfTwo, pi }

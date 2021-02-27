@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/calculator.dart';
+import 'package:flutter_app/pi.dart';
+import 'package:flutter_app/power_of_two.dart';
 import 'package:flutter_app/two_digit_operation.dart';
 
 class CalculatorApp extends StatelessWidget {
@@ -24,6 +26,8 @@ class CalculatorApp extends StatelessWidget {
                 TwoDigitOperation(calculator: calculator, operation: Operation.subtract),
                 TwoDigitOperation(calculator: calculator, operation: Operation.multiply),
                 TwoDigitOperation(calculator: calculator, operation: Operation.divide),
+                PowerOfTwo(calculator: calculator),
+                Pi(calculator: calculator),
               ],
             ),
           ),
